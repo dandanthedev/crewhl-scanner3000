@@ -16,6 +16,9 @@
 								goto('/update');
 							} else if (data.data === null) {
 								msg = 'Kon niet controleren op updates.';
+								setTimeout(() => {
+									goto('/home');
+								}, 5000);
 							} else {
 								goto('/home');
 							}
