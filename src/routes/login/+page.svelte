@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { env } from '$env/dynamic/public';
+	import { goto } from '$app/navigation';
 
 	let scanning = false;
 
@@ -18,28 +19,28 @@
 		scanning = false;
 		console.log(decodedText);
 
-		const res = await fetch(
-			`${env.PUBLIC_API_URL}/scanner/scan/${data.date}?barcode=${decodedText}`,
-			{
-				credentials: 'include'
-			}
-		);
+		const phone = decodedText.split('|')[0];
+		const auth = decodedText.split('|')[1];
+
+		const res = await fetch(`${env.PUBLIC_API_URL}/auth`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include',
+			body: JSON.stringify({ phone, code: auth })
+		});
 
 		const json = await res.json();
 		console.log(json);
 
 		if (json.error) {
 			scanError = json.error;
+			await new Promise((resolve) => setTimeout(resolve, 3000));
+			scanning = true;
 		} else {
-			scanData = json.data;
+			goto('/home');
 		}
-
-		await new Promise((resolve) => setTimeout(resolve, 3000));
-
-		scanError = null;
-		scanData = null;
-
-		scanning = true;
 	}
 	function init() {
 		html5Qrcode = new Html5Qrcode('reader');
@@ -55,23 +56,41 @@
 	}
 </script>
 
-<main>
-	<div class="readerContainer">
-		<reader class="reader" id="reader"></reader>
-		{#if !scanning}
-			<div class="readerOverlay" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
-				{#if scanError}
-					<p>{scanError}</p>
-				{/if}
-				{#if scanData}
-					<p>{scanData.name}</p>
-				{/if}
-			</div>
-		{/if}
-	</div>
-</main>
+<div class="bg">
+	<p class="text">Scan de QR code op crewhl.nl</p>
+	<main>
+		<div class="readerContainer">
+			<reader class="reader" id="reader"></reader>
+			{#if !scanning}
+				<div class="readerOverlay" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+					{#if scanError}
+						<p>{scanError}</p>
+					{/if}
+				</div>
+			{/if}
+		</div>
+	</main>
+</div>
 
 <style>
+	.text {
+		position: absolute;
+		top: 5%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white;
+		font-size: 30px;
+		font-family: 'Roboto', sans-serif;
+		width: 100%;
+		text-align: center;
+	}
+
+	.bg {
+		background-color: #11b4e2;
+		width: 100%;
+		height: 100%;
+	}
+
 	main {
 		display: flex;
 		flex-direction: column;

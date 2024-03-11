@@ -6,7 +6,10 @@
 
 	const getDate = async () => {
 		const response = await fetch(
-			`${env.PUBLIC_API_URL}/scanner/productions/${data.id}/${data.date}`
+			`${env.PUBLIC_API_URL}/scanner/productions/${data.id}/${data.date}`,
+			{
+				credentials: 'include'
+			}
 		);
 		const res = await response.json();
 		$date = res.data;

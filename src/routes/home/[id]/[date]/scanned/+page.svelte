@@ -12,7 +12,9 @@
 	let confirmAction = () => {};
 
 	onMount(async () => {
-		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/scanned/${data.date}`);
+		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/scanned/${data.date}`, {
+			credentials: 'include'
+		});
 		const res = await response.json();
 		tickets = res.data;
 		shownTickets = tickets.slice(0, 3);
@@ -68,7 +70,9 @@
 					if (ticket.scanned) {
 						confirmMsg = 'Weet je zeker dat je dit ticket wilt markeren als niet gescand?';
 						confirmAction = async () => {
-							const res = await fetch(`${env.PUBLIC_API_URL}/scanner/unscan/${ticket.barcode}`);
+							const res = await fetch(`${env.PUBLIC_API_URL}/scanner/unscan/${ticket.barcode}`, {
+								credentials: 'include'
+							});
 							const json = await res.json();
 							if (json.error) {
 								confirmMsg = json.error;
@@ -91,7 +95,10 @@
 						confirmMsg = 'Weet je zeker dat je dit ticket wilt markeren als gescand?';
 						confirmAction = async () => {
 							const res = await fetch(
-								`${env.PUBLIC_API_URL}/scanner/scan/${data.date}?barcode=${ticket.barcode}`
+								`${env.PUBLIC_API_URL}/scanner/scan/${data.date}?barcode=${ticket.barcode}`,
+								{
+									credentials: 'include'
+								}
 							);
 							const json = await res.json();
 							if (json.error) {

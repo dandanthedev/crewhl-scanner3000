@@ -5,7 +5,9 @@
 	import { production } from '$lib/stores';
 
 	const getProduction = async () => {
-		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/productions/${data.id}`);
+		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/productions/${data.id}`, {
+			credentials: 'include'
+		});
 		const res = await response.json();
 		$production = res.data;
 	};

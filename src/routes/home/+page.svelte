@@ -6,7 +6,9 @@
 	let productions = [];
 
 	const getProductions = async () => {
-		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/productions`);
+		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/productions`, {
+			credentials: 'include'
+		});
 		const data = await response.json();
 		productions = data.data;
 	};
