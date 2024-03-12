@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { env } from '$env/dynamic/public';
+	import { goto } from '$app/navigation';
 
 	let scanning = false;
 
@@ -69,6 +70,12 @@
 			</div>
 		{/if}
 	</div>
+	<button
+		on:click={() => {
+			goto(`/home/${data.id}/${data.date}/scanned`);
+		}}
+		class="manual">Handmatig</button
+	>
 </main>
 
 <style>
@@ -111,18 +118,14 @@
 		font-size: 20px;
 		font-family: 'Roboto', sans-serif;
 	}
-	.back {
-		position: absolute;
-		bottom: 5%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: #f2f2f2;
-		border: none;
-		border-radius: 5px;
+	.manual {
+		margin-top: -15px;
 		padding: 10px 20px;
 		font-size: 20px;
 		font-family: 'Roboto', sans-serif;
+		background-color: white;
+		border: none;
+		border-radius: 5px;
 		cursor: pointer;
-		width: 80%;
 	}
 </style>
