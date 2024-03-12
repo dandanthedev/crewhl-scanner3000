@@ -1,46 +1,14 @@
 <script>
-	import { goto } from '$app/navigation';
-	import { env } from '$env/dynamic/public';
 	import { onMount } from 'svelte';
-	import { production } from '$lib/stores';
-	let productions = [];
 
-	const getProductions = async () => {
-		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/productions`, {
-			credentials: 'include'
-		});
-		const data = await response.json();
-		productions = data.data;
-	};
-	getProductions();
+	onMount(async () => {
+		fetch('/api/shutdown');
+	});
 </script>
 
 <div class="bg">
 	<img src="/logo.png" class="logo" />
-	<h1 class="text">Kies productie</h1>
-
-	<div class="productions">
-		{#each productions as productionElem}
-			<div
-				class="production"
-				on:click={() => {
-					goto(`/home/${productionElem.id}`);
-					$production = productionElem;
-				}}
-			>
-				{productionElem.name}
-			</div>
-		{/each}
-	</div>
-
-	<button
-		class="back"
-		on:click={() => {
-			goto('/shutdown');
-		}}
-	>
-		Afsluiten
-	</button>
+	<h1 class="text">doegdoeg!</h1>
 </div>
 
 <style>
