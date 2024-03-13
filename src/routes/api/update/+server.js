@@ -3,7 +3,7 @@ import { exec } from "child_process";
 export async function GET() {
     //git pull and build, then restart the server. Send output to console
     const data = await new Promise((resolve, reject) => {
-        exec("git pull && npm run build && reboot now", (error, stdout, stderr) => {
+        exec("git pull --force && npm i && npm run build && reboot now", (error, stdout, stderr) => {
             if (error) {
                 reject(error);
             }
