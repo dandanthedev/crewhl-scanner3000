@@ -10,9 +10,7 @@ export async function GET() {
                 }
                 resolve(stdout);
             });
-        }
-
-        );
+        });
         if (data.includes("Your branch is behind")) {
             return json({ data: true });
         }
