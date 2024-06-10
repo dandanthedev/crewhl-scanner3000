@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import { env } from '$env/dynamic/public';
 	import { goto } from '$app/navigation';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 
 	let scanning = false;
 
@@ -19,16 +20,18 @@
 		scanning = false;
 		console.log(decodedText);
 
-		const phone = decodedText.split('|')[0];
-		const auth = decodedText.split('|')[1];
+		const access = decodedText.split('|')[0];
+		const refresh = decodedText.split('|')[1];
 
-		const res = await fetch(`${env.PUBLIC_API_URL}/auth`, {
-			method: 'POST',
+		localStorage.setItem('access', access);
+		localStorage.setItem('refresh', refresh);
+
+		const res = await fetch(`${env.PUBLIC_API_URL}/user`, {
+			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			credentials: 'include',
-			body: JSON.stringify({ phone, code: auth })
+			credentials: 'include'
 		});
 
 		const json = await res.json();

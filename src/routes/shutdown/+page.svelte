@@ -1,7 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 
 	onMount(async () => {
+		localStorage.clear();
 		fetch('/api/shutdown');
 	});
 </script>

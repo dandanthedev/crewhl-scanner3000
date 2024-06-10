@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { production, date } from '$lib/stores';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 </script>
 
 <div class="bg">

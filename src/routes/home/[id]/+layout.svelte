@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { env } from '$env/dynamic/public';
 	import { production } from '$lib/stores';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 
 	const getProduction = async () => {
 		const response = await fetch(`${env.PUBLIC_API_URL}/scanner/productions/${data.id}`, {

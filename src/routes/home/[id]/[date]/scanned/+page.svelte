@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
 	import { fade } from 'svelte/transition';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 
 	export let data;
 	let tickets = [];

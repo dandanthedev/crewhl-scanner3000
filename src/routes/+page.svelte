@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { env } from '$env/dynamic/public';
 	import { onMount } from 'svelte';
+
 	let error;
 	let msg = 'Verbinden...';
 	onMount(() => {

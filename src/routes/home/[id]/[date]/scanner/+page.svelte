@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import { env } from '$env/dynamic/public';
 	import { goto } from '$app/navigation';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 
 	let scanning = false;
 

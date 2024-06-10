@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { env } from '$env/dynamic/public';
 	import { onMount } from 'svelte';
+	import { customFetch as fetch } from '$lib/injectedFetch';
 </script>
 
 <div class="bg">
@@ -11,6 +12,9 @@
 	<h1 class="text">Kies show</h1>
 
 	<div class="productions">
+		{#if $production?.dates?.length === 0}
+			<p class="error">Geen shows ingesteld.</p>
+		{/if}
 		{#each $production?.dates || [] as dateData}
 			<div
 				class="production"
@@ -75,5 +79,12 @@
 		background-color: white;
 		border-radius: 10px;
 		cursor: pointer;
+	}
+
+	.error {
+		color: white;
+		font-weight: bold;
+		font-size: 20px;
+		font-family: 'Roboto', sans-serif;
 	}
 </style>

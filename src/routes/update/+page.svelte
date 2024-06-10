@@ -1,6 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import { customFetch as fetch } from '$lib/injectedFetch';
+
 	let confirmMsg = '';
 	let confirmAction = () => {};
 	let msg = 'Er is een update beschikbaar.';
