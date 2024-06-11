@@ -10,9 +10,9 @@
 		<div class="option" on:click={() => goto(`/home/${$production.id}/${$date.id}/scanner`)}>
 			Scanner
 		</div>
-		<div class="option" on:click={() => goto(`/home/${$production.id}/${$date.id}/scanned`)}>
+		<!-- <div class="option" on:click={() => goto(`/home/${$production.id}/${$date.id}/scanned`)}>
 			Gescanned
-		</div>
+		</div> -->
 	</div>
 </div>
 

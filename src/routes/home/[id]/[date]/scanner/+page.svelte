@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { env } from '$env/dynamic/public';
-	import { goto } from '$app/navigation';
 	import { customFetch as fetch } from '$lib/injectedFetch';
 
 	let scanning = false;
@@ -33,7 +32,7 @@
 		if (json.error) {
 			scanError = json.error;
 		} else {
-			scanData = json.data;
+			scanData = json;
 		}
 
 		await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -65,18 +64,12 @@
 				{#if scanError}
 					<p>{scanError}</p>
 				{/if}
-				{#if scanData}
-					<p>{scanData.name}</p>
+				{#if scanData?.success}
+					<p>GELDIG!</p>
 				{/if}
 			</div>
 		{/if}
 	</div>
-	<button
-		on:click={() => {
-			goto(`/home/${data.id}/${data.date}/scanned`);
-		}}
-		class="manual">Handmatig</button
-	>
 </main>
 
 <style>
